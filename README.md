@@ -42,8 +42,9 @@ A few of the things you can do with Tic-tac-toe:
 
 * Live audio chat 
 <p align="center">
-  <img src = "https://user-images.githubusercontent.com/52238457/183859843-1ccf1231-c52e-4915-b019-dc16a79bb4b4.png" width=350>
+  <img src = "https://user-images.githubusercontent.com/52238457/183861768-a6f9c620-ca80-4ba1-9c38-3b9287a9599a.png" width=350>
 </p>
+
 * More features coming soon
 
 
