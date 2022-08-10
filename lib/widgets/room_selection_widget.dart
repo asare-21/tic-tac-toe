@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/widgets/loading.dart';
 
 OutlineInputBorder border = OutlineInputBorder(
     borderRadius: BorderRadius.circular(5),
@@ -9,7 +8,7 @@ OutlineInputBorder focusedBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(5),
     borderSide: const BorderSide(color: Color(0xfffca311)));
 
-Widget roomBottomModalSheet(BuildContext context) {
+Widget roomBottomModalSheet(BuildContext context, bool mounted) {
   return Container(
       padding: const EdgeInsets.all(25),
       height: 300,
@@ -49,7 +48,7 @@ Widget roomBottomModalSheet(BuildContext context) {
               if (FocusScope.of(context).hasFocus) {
                 FocusScope.of(context).unfocus();
               }
-              loading(context);
+              // loading(context, mounted);
             },
             child: const SizedBox(
                 width: 150,

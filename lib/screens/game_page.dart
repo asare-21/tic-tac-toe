@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tic_tac_toe/models/get_lottie.dart';
+import 'package:tic_tac_toe/widgets/audio_widget.dart';
 import 'package:tic_tac_toe/widgets/room_selection_widget.dart';
 
 class GameScreen extends StatefulWidget {
@@ -46,7 +47,7 @@ class _GameScreenState extends State<GameScreen> {
         context: context,
         builder: (context) => Padding(
               padding: MediaQuery.of(context).viewInsets,
-              child: roomBottomModalSheet(context),
+              child: roomBottomModalSheet(context, mounted),
             ));
   }
 
@@ -135,7 +136,11 @@ class _GameScreenState extends State<GameScreen> {
                         );
                       }),
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              audioCard(context)
             ],
           ),
         ),
