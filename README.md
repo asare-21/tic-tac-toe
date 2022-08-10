@@ -1,7 +1,7 @@
 <h1 align="center"> tx3 </h1> <br>
 <p align="center">
   <a href="https://github.com/asare-21/tic-tac-toe">
-    <img alt="GitPoint" title="GitPoint" src="http://i.imgur.com/VShxJHs.png" width="450">
+    <img alt="tx3" title="tx3" src="https://user-images.githubusercontent.com/52238457/183863690-60336baa-4444-41bc-8c72-d93605a03abc.png" width="450">
   </a>
 </p>
 
