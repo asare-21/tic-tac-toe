@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tic_tac_toe/models/get_lottie.dart';
 import 'package:tic_tac_toe/widgets/elevated_button.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -18,8 +19,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            LottieBuilder.network(
-                "https://assets7.lottiefiles.com/packages/lf20_1pxqjqps.json",
+            LottieBuilder.asset(GetLottie.get("welcome"),
                 alignment: Alignment.topCenter),
             Positioned(
                 bottom: 200,

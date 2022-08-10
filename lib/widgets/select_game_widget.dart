@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tic_tac_toe/models/get_lottie.dart';
 
 Widget selectGameWidget(BuildContext context, String text,
     void Function() onPressed, String lottieUrl) {
@@ -19,8 +20,8 @@ Widget selectGameWidget(BuildContext context, String text,
               CircleAvatar(
                 radius: 40,
                 backgroundColor: Colors.white,
-                child: LottieBuilder.network(
-                  lottieUrl,
+                child: LottieBuilder.asset(
+                  GetLottie.get(lottieUrl),
                 ),
               ),
               Text(
