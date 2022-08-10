@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TicTacToe',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: const Color(0xffedffe9),

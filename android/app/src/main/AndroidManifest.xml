@@ -4,6 +4,9 @@
         android:label="tic_tac_toe"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <uses-permission android:name="android.permission.RECORD_AUDIO" />
+<!-- Optional, you'll have to check this permission by yourself. -->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
