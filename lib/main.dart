@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac_toe/providers/background_music_provider.dart';
+import 'package:tic_tac_toe/providers/player_move_provider.dart';
 import 'package:tic_tac_toe/screens/home_page.dart';
 import 'package:tic_tac_toe/screens/game_page.dart';
 import 'package:tic_tac_toe/screens/select_game.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => BackgroundMusicProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => MoveProvider(),
+    )
+  ], child: const MyApp()));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 
 class MyApp extends StatelessWidget {
@@ -13,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TicTacToe',
+      title: 'tx3',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

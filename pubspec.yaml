@@ -37,9 +37,12 @@ dependencies:
   provider: ^6.0.3
   lottie: ^1.4.1
   awesome_dialog: ^2.2.1
-  flutter_sound: ^9.2.13
+  # flutter_sound: ^9.2.13
   permission_handler: ^10.0.0
-  audio_session: ^0.1.10
+  mic_stream: ^0.2.1
+  shared_preferences: ^2.0.15
+  audioplayers: ^1.0.1
+  # audio_session: ^0.1.10
 
 dev_dependencies:
   flutter_test:
@@ -77,7 +80,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  #image: assets/splash.png
+  image: assets/icon.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android < v12, iOS and the Web.
@@ -195,6 +198,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/lottie/
+    - assets/audio/
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
