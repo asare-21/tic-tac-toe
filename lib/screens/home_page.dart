@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/models/get_lottie.dart';
+import 'package:tic_tac_toe/providers/socket_provider.dart';
 import 'package:tic_tac_toe/widgets/elevated_button.dart';
 
 import '../providers/background_music_provider.dart';
@@ -19,6 +20,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await Provider.of<BackgroundMusicProvider>(context, listen: false)
           .playing();
+      if (mounted) {
+        Provider.of<SocketProvider>(context, listen: false).initSocket(context);
+      }
     });
     super.initState();
   }

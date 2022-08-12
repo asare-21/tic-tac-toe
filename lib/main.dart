@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/providers/background_music_provider.dart';
 import 'package:tic_tac_toe/providers/player_move_provider.dart';
+import 'package:tic_tac_toe/providers/socket_provider.dart';
 import 'package:tic_tac_toe/screens/home_page.dart';
 import 'package:tic_tac_toe/screens/game_page.dart';
 import 'package:tic_tac_toe/screens/select_game.dart';
+import 'package:tic_tac_toe/screens/sign_in_or_create.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +17,9 @@ void main() {
     ),
     ChangeNotifierProvider(
       create: (context) => MoveProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => SocketProvider(),
     )
   ], child: const MyApp()));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -37,9 +42,10 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      initialRoute: "/",
+      initialRoute: "/auth",
       routes: {
         "/": (context) => const HomePageScreen(),
+        "/auth": (context) => const SignInOrCreate(),
         "/select-game": (context) => const SelectGameScreen(),
         "/game": (context) => const GameScreen(),
       },

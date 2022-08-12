@@ -6,16 +6,20 @@ class BackgroundMusicProvider with ChangeNotifier {
   final _player = AudioPlayer();
 
   Future<bool?> playing() async {
-    AudioCache cache = AudioCache(prefix: "assets/audio/");
-    final url = await cache.load("bg.mp3");
+    try {
+      AudioCache cache = AudioCache(prefix: "assets/audio/");
+      final url = await cache.load("bg.mp3");
 
-    // await _player.setSourceUrl(url.path);
-    await _player.play(
-      AssetSource(url.path),
-    );
+      // await _player.setSourceUrl(url.path);
+      await _player.play(AssetSource('audio/bg.mp3'));
+      await _player.setVolume(1);
 
-    notifyListeners();
-    return false;
+      notifyListeners();
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
+    }
   }
 
   Future<bool> get getMuted async {
@@ -29,7 +33,7 @@ class BackgroundMusicProvider with ChangeNotifier {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool muted = prefs.getBool("muted") ?? false;
       if (!muted) {
-        await _player.play(DeviceFileSource('assets/audio/bg.mp3'));
+        await _player.play(AssetSource('audio/bg.mp3'));
 
         bool hasMuted = await prefs.setBool("muted", !muted);
         notifyListeners();
