@@ -57,6 +57,7 @@ class _SignInState extends State<SignIn> {
           TextFormField(
             controller: password,
             cursorColor: cursorColor,
+            obscureText: true,
             decoration: InputDecoration(
                 hintText: "Password",
                 border: border,

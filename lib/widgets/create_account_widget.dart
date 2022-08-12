@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tic_tac_toe/models/get_lottie.dart';
 import 'package:tic_tac_toe/widgets/elevated_button.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -32,6 +34,18 @@ class _CreateAccountState extends State<CreateAccount> {
     super.dispose();
   }
 
+  void showDialogLoading() {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text("Please wait..."),
+              content: LottieBuilder.asset(
+                GetLottie.get('loading'),
+                height: 80,
+              ),
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,9 +59,21 @@ class _CreateAccountState extends State<CreateAccount> {
             controller: username,
             cursorColor: cursorColor,
             autofocus: true,
+            onFieldSubmitted: (value) {
+              showDialogLoading();
+            },
+            onEditingComplete: () {
+              showDialogLoading();
+            },
+            textInputAction: TextInputAction.send,
             decoration: InputDecoration(
                 hintText: "Username",
                 border: border,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: myElevatedButton(context, 'Check', () {},
+                      elevation: 0, width: 80),
+                ),
                 focusedBorder: focusedBorder),
           ),
           const SizedBox(
@@ -56,6 +82,7 @@ class _CreateAccountState extends State<CreateAccount> {
           TextFormField(
             controller: password,
             cursorColor: cursorColor,
+            obscureText: true,
             decoration: InputDecoration(
                 hintText: "Password",
                 border: border,
@@ -66,6 +93,7 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           TextFormField(
             controller: password,
+            obscureText: true,
             cursorColor: cursorColor,
             decoration: InputDecoration(
                 labelText: "Confirm Password",
