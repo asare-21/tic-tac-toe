@@ -23,7 +23,7 @@ https.listen(port, () => {
 
 io.on("connection", (socket) => {
 
-    console.log("user connected", socket);
+    console.log("user connected");
 
     socket.on("location", (msg) => {
         console.log(msg, "Stream");
