@@ -14,16 +14,13 @@ Widget myElevatedButton(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
       onPressed: onPressed,
-      child: Expanded(
-        // width: double.infinity,
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1!
-              .copyWith(color: Colors.black),
-        ),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: Theme.of(context)
+            .textTheme
+            .bodyText1!
+            .copyWith(color: Colors.black),
       ),
     ),
   );

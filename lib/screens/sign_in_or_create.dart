@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/models/get_lottie.dart';
 
+import '../providers/background_music_provider.dart';
 import '../widgets/create_account_widget.dart';
 import '../widgets/signin_widget.dart';
 
@@ -14,12 +16,24 @@ class SignInOrCreate extends StatefulWidget {
 
 class _SignInOrCreateState extends State<SignInOrCreate> {
   @override
+  void initState() {
+    Provider.of<BackgroundMusicProvider>(context, listen: false).playing();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    Provider.of<BackgroundMusicProvider>(context, listen: false).mute();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: DefaultTabController(
-        length: 2,
+        body: DefaultTabController(
+      length: 2,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,6 +79,28 @@ class _SignInOrCreateState extends State<SignInOrCreate> {
                     CreateAccount(),
                   ]),
                 ),
+              ),
+              Consumer<BackgroundMusicProvider>(
+                builder: (context, provider, child) {
+                  return Positioned(
+                    bottom: 150,
+                    child: CircleAvatar(
+                      child: IconButton(
+                        icon: FutureBuilder<bool>(
+                            future: provider.getMuted,
+                            builder: (context, snapshot) {
+                              bool muted = snapshot.data ?? false;
+                              return Icon(
+                                !muted ? Icons.volume_off : Icons.speaker,
+                                color: Colors.white,
+                              );
+                            }),
+                        onPressed: () =>
+                            context.read<BackgroundMusicProvider>().mute(),
+                      ),
+                    ),
+                  );
+                },
               )
             ],
           ),
