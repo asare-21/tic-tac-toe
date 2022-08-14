@@ -72,7 +72,7 @@ router.post("/create", (req, res) => {
 
         })
     } catch (e) {
-        console.log("Username creation error: ", e)
+        console.log("Account creation error: ", e)
         return res.status(400).json({ success: false, error: e })
     }
 })
