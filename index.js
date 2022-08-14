@@ -27,7 +27,6 @@ app.use("/users", authRouter)
 io.on("connection", (socket) => {
     ////////////////////////////////////////////////////////////////
     console.log("user connected");
-    console.log("Authentication ", socket);
     console.log("Rooms ", socket.rooms)
     ////////////////////////////////////////////////////////////////
 
