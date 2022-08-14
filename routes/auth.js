@@ -36,7 +36,7 @@ router.post("/login", (req, res) => {
             if (err) return res.status(400).json({ success: false, error: err })
             if (!user) return res.status(200).json({ success: false, error: "User not found" })
             // Compare password
-            bcrypt.compare(password, hash, function (err, result) {
+            bcrypt.compare(password, user.password, function (err, result) {
                 if (err) return res.status(400).json({ success: false, error: err })
                 if (!result) {
                     // Incorrect password
