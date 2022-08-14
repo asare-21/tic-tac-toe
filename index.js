@@ -9,7 +9,7 @@ const io = require('socket.io')(https);
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-
+const { authRouter } = require('./routes/auth')
 
 https.listen(port, () => {
     connect(
@@ -20,20 +20,33 @@ https.listen(port, () => {
     });
 });
 
+// Routes
+app.use("/users", authRouter)
+//
 
 io.on("connection", (socket) => {
-
+    ////////////////////////////////////////////////////////////////
     console.log("user connected");
+    console.log("Authentication ", socket.auth)
+    console.log("Rooms ", socket.rooms)
+    ////////////////////////////////////////////////////////////////
 
-    socket.on("location", (msg) => {
-        console.log(msg, "Stream");
-        socket.broadcast.emit("location", msg);
-    });
-    socket.on("cancel-location", (msg) => {
-        console.log(msg);
-        socket.broadcast.emit("cancel-location", msg);
-    });
-    socket.on("disconnect", () => {
+    socket.on("new-room", (roomId, userId) => {
+        socket.join(roomId); // Join room
+    })
+
+    socket.on("game", (roomId, userId) => {
+        socket.to(roomId).emit("game", { userId, positon: "001" }); // emit data to specific room
+    })
+
+
+
+    ////////////////////////////////////////////////////////////////
+    socket.on("disconnect", (roomId) => {
         console.log("user disconnected");
+        socket.leave(roomId); // Leave room
+        socket.to(roomId).emit(`user ${socket.id} has left the room`); // Notify other users in room
     });
+    ////////////////////////////////////////////////////////////////
+
 });
