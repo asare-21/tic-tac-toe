@@ -3,9 +3,9 @@ const { UserModel } = require('../model/user_model');
 var bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
 
-router.get('/check', (req, res) => {
+router.get('/check/:username', (req, res) => {
     // Check if username exists in database
-    const query = req.query.username
+    const query = req.params.username
     try {
         UserModel.findOne({ username: query }, (err, user) => {
             if (err) return res.statusCode(400).json({ success: false, error: err })
