@@ -23,6 +23,7 @@
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Backend](#backend)
 
 
 ## Introduction
@@ -44,6 +45,19 @@ A few of the things you can do with tx3:
 <p align="center">
   <img src = "https://user-images.githubusercontent.com/52238457/183861768-a6f9c620-ca80-4ba1-9c38-3b9287a9599a.png" width=350>
 </p>
+
+
+## Backend
+  <div align="center">
+  <h1>Multiplayer Communication with Socket.IO</h1>
+  <p >Bidirectional and low-latency communication</p>
+  </div>
+
+  * Room for each multiplater session
+  * Live stream player moves
+  
+
+
 
 * More features coming soon
 

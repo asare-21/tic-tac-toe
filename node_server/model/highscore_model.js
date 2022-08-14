@@ -7,6 +7,6 @@ const highscoreSchema = new Schema({
     }
 })
 
-const Highscore = model('Highscore', highscoreSchema)
 
-module.exports.HighScoreModel = Highscore;
+
+module.exports.HighScoreSchema = highscoreSchema;

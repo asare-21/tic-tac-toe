@@ -17,13 +17,11 @@ class SignInOrCreate extends StatefulWidget {
 class _SignInOrCreateState extends State<SignInOrCreate> {
   @override
   void initState() {
-    Provider.of<BackgroundMusicProvider>(context, listen: false).playing();
     super.initState();
   }
 
   @override
   void dispose() {
-    Provider.of<BackgroundMusicProvider>(context, listen: false).mute();
     super.dispose();
   }
 
@@ -82,22 +80,19 @@ class _SignInOrCreateState extends State<SignInOrCreate> {
               ),
               Consumer<BackgroundMusicProvider>(
                 builder: (context, provider, child) {
-                  return Positioned(
-                    bottom: 150,
-                    child: CircleAvatar(
-                      child: IconButton(
-                        icon: FutureBuilder<bool>(
-                            future: provider.getMuted,
-                            builder: (context, snapshot) {
-                              bool muted = snapshot.data ?? false;
-                              return Icon(
-                                !muted ? Icons.volume_off : Icons.speaker,
-                                color: Colors.white,
-                              );
-                            }),
-                        onPressed: () =>
-                            context.read<BackgroundMusicProvider>().mute(),
-                      ),
+                  return CircleAvatar(
+                    child: IconButton(
+                      icon: FutureBuilder<bool>(
+                          future: provider.getMuted,
+                          builder: (context, snapshot) {
+                            bool muted = snapshot.data ?? false;
+                            return Icon(
+                              !muted ? Icons.volume_off : Icons.speaker,
+                              color: Colors.white,
+                            );
+                          }),
+                      onPressed: () =>
+                          context.read<BackgroundMusicProvider>().mute(),
                     ),
                   );
                 },

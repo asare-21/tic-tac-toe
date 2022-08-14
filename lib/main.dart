@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/providers/background_music_provider.dart';
 import 'package:tic_tac_toe/providers/player_move_provider.dart';
 import 'package:tic_tac_toe/providers/socket_provider.dart';
+import 'package:tic_tac_toe/providers/user_provider.dart';
 import 'package:tic_tac_toe/screens/home_page.dart';
 import 'package:tic_tac_toe/screens/game_page.dart';
 import 'package:tic_tac_toe/screens/select_game.dart';
@@ -14,6 +15,9 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => BackgroundMusicProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
     ),
     ChangeNotifierProvider(
       create: (context) => MoveProvider(),

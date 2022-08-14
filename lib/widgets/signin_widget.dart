@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tic_tac_toe/providers/user_provider.dart';
 import 'package:tic_tac_toe/widgets/elevated_button.dart';
-
-import '../providers/background_music_provider.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -35,8 +34,6 @@ class _SignInState extends State<SignIn> {
   void dispose() {
     username.dispose();
     password.dispose();
-    Provider.of<BackgroundMusicProvider>(context, listen: false).mute();
-
     super.dispose();
   }
 
@@ -87,11 +84,23 @@ class _SignInState extends State<SignIn> {
             const SizedBox(
               height: 35,
             ),
-            myElevatedButton(context, "Sign in", () {
+            myElevatedButton(context, "Sign in", () async {
               FocusScope.of(context).unfocus();
               if (_formKey.currentState!.validate()) {
                 // If the form is valid, send details to server for authentication
-
+                bool response = await Provider.of<UserProvider>(context,
+                        listen: false)
+                    .signIn(username: username.text, password: password.text);
+                if (!response && mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    duration: Duration(seconds: 5),
+                    content: Text("Invalid username or password"),
+                  ));
+                  return;
+                }
+                if (mounted) {
+                  Navigator.pushReplacementNamed(context, "/select-game");
+                }
               }
             }, height: 40, width: 150)
           ],

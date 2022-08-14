@@ -13,10 +13,10 @@ class UserProvider with ChangeNotifier {
       prefs = await SharedPreferences.getInstance();
       Response response = await Dio().get(
           "$checkUrl/$username"); // Use ws://localhost:3000 for testing and wss:// for production
-      return response.data;
+      return response.data['user']['exists'];
     } catch (e) {
       debugPrint("Username search error: $e");
-      rethrow;
+      return false;
     }
   }
 
@@ -32,11 +32,12 @@ class UserProvider with ChangeNotifier {
       return response.data['success'];
     } catch (e) {
       debugPrint("Account creating error: $e");
-      rethrow;
+      return false;
     }
   }
 
-  Future signIn({required String username, required String password}) async {
+  Future<bool> signIn(
+      {required String username, required String password}) async {
     try {
       prefs = await SharedPreferences.getInstance();
       //
@@ -44,8 +45,9 @@ class UserProvider with ChangeNotifier {
         'username': username,
         'password': password,
       });
-      String uid = response.data['uid'];
-      String serverUsername = response.data['username'];
+
+      String uid = response.data['user']['_id'];
+      String serverUsername = response.data['user']['username'];
 
       prefs.setBool("auth", true); // true
       prefs.setString("uid", uid); // User uid returned from server
@@ -54,10 +56,14 @@ class UserProvider with ChangeNotifier {
         uid: uid,
         username: serverUsername, // Username returned from server
       );
-      return response.data['success'];
+      if (response.data['success']) {
+        Map<String, dynamic> userData = response.data['user'];
+        return true;
+      }
+      return false;
     } catch (e) {
       debugPrint("Sign in error: $e");
-      rethrow;
+      return false;
     }
   }
 

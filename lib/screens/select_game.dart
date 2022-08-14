@@ -15,7 +15,10 @@ class _SelectGameScreenState extends State<SelectGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: Container(),
+        backgroundColor: const Color(0x0ffedffe),
+      ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(

@@ -15,6 +15,7 @@ class SocketProvider with ChangeNotifier {
             .setTransports(['websocket']) // for Flutter or Dart VM
             // .disableAutoConnect() // disable auto-connection
             // .setExtraHeaders({'foo': 'bar'}) // optional
+            .setAuth({"username": "John", "password": "Doe"}) // optional
             .build());
     socket.onConnect((_) {
       debugPrint("Socket connected - $_");

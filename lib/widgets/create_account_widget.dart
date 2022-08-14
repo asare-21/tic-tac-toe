@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/models/get_lottie.dart';
-import 'package:tic_tac_toe/providers/background_music_provider.dart';
 import 'package:tic_tac_toe/widgets/elevated_button.dart';
+
+import '../providers/user_provider.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   late TextEditingController username, password, confimPassword;
   final _formKey = GlobalKey<FormState>();
-
+  bool usernameAvailable = false;
   OutlineInputBorder border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(5),
       borderSide: const BorderSide(color: Color(0xffedf6f9)));
@@ -36,7 +37,6 @@ class _CreateAccountState extends State<CreateAccount> {
   void dispose() {
     username.dispose();
     password.dispose();
-    Provider.of<BackgroundMusicProvider>(context, listen: false).mute();
     super.dispose();
   }
 
@@ -67,6 +67,11 @@ class _CreateAccountState extends State<CreateAccount> {
               controller: username,
               cursorColor: cursorColor,
               autofocus: true,
+              onChanged: (_) {
+                setState(() {
+                  usernameAvailable = false;
+                });
+              },
               onFieldSubmitted: (value) {
                 showDialogLoading();
               },
@@ -79,8 +84,35 @@ class _CreateAccountState extends State<CreateAccount> {
                   border: border,
                   suffixIcon: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: myElevatedButton(context, 'Check', () {},
-                        elevation: 0, width: 80),
+                    child: myElevatedButton(
+                      context,
+                      'Check',
+                      () async {
+                        if (username.text.isNotEmpty) {
+                          bool response = await Provider.of<UserProvider>(
+                                  context,
+                                  listen: false)
+                              .checkUsernameAvailability(username.text);
+                          setState(() {
+                            usernameAvailable = response;
+                          });
+                          if (!response && mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text(
+                                  "Username ${username.text} is available"),
+                            ));
+                          } else if (response && mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Username ${username.text} is not available"),
+                            ));
+                          }
+                        }
+                      },
+                      elevation: 0,
+                      width: 80,
+                    ),
                   ),
                   focusedBorder: focusedBorder),
             ),
@@ -118,15 +150,39 @@ class _CreateAccountState extends State<CreateAccount> {
                 return null;
               },
               decoration: InputDecoration(
-                  labelText: "Confirm Password",
+                  hintText: "Confirm Password",
                   border: border,
                   focusedBorder: focusedBorder),
             ),
             const SizedBox(
               height: 20,
             ),
-            myElevatedButton(context, "Create My Account", () {},
-                height: 40, width: 150)
+            const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                  "You need to check username availability before you can create an account",
+                  style: TextStyle(color: Colors.red)),
+            ),
+            usernameAvailable
+                ? myElevatedButton(context, "Create My Account", () async {
+                    if (_formKey.currentState!.validate() &&
+                        usernameAvailable) {
+                      // If the form is valid, send details to server for authentication
+                      bool response = await Provider.of<UserProvider>(context,
+                              listen: false)
+                          .createAccount(
+                              username: username.text, password: password.text);
+                      if (!response && mounted) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          duration: Duration(seconds: 5),
+                          content: Text("Account creation error"),
+                        ));
+                        return;
+                      }
+                    }
+                  }, height: 40, width: 150)
+                : Container()
           ],
         ),
       ),
