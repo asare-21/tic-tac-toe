@@ -30,4 +30,14 @@ class SocketProvider with ChangeNotifier {
       ));
     });
   }
+
+  void joinRoom(String roomId) {
+    // Join room
+    socket.emit("new-room", roomId);
+  }
+
+  void leaveRoom(String roomId) {
+    // Leave room
+    socket.emit("leave-room", roomId);
+  }
 }

@@ -47,7 +47,7 @@ class _GameScreenState extends State<GameScreen> {
         context: context,
         builder: (context) => Padding(
               padding: MediaQuery.of(context).viewInsets,
-              child: roomBottomModalSheet(context, mounted),
+              child: const RoomBottomSheet(),
             ));
   }
 
