@@ -33,6 +33,9 @@ io.on("connection", (socket) => {
     socket.on("new-room", (roomId, userId) => {
         socket.join(roomId); // Join room
     })
+    socket.on("leave-room", (roomId, userId) => {
+        socket.join(roomId); // Join room
+    })
 
     socket.on("game", (roomId, userId) => {
         socket.to(roomId).emit("game", { userId, positon: "001" }); // emit data to specific room
